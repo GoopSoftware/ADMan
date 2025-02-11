@@ -13,5 +13,6 @@ AssetManager::~AssetManager() {
 	UnloadTexture(FG);
 	UnloadTexture(MG);
 	UnloadTexture(WW);
+	UnloadTexture(flyingEye);
 }
 

@@ -10,14 +10,13 @@ UI::~UI() {
 
 }
 
-void UI::parallaxBackground(float deltaTime) {
+void UI::parallaxBackground(float deltaTime, float gameSpeed) {
 
-	
 
-	bgOffset += bgScrollSpeed * deltaTime;
-	mgOffset += mgScrollSpeed * deltaTime;
-	fgOffset += fgScrollSpeed * deltaTime;
-	wwOffset += wwScrollSpeed * deltaTime;
+	bgOffset += (bgScrollSpeed * deltaTime) * gameSpeed;
+	mgOffset += (mgScrollSpeed * deltaTime) * gameSpeed;
+	fgOffset += (fgScrollSpeed * deltaTime) * gameSpeed;
+	wwOffset += (wwScrollSpeed * deltaTime) * gameSpeed;
 
 	if (mgOffset > MG.width) mgOffset -= MG.width;
 	if (fgOffset > FG.width) fgOffset -= FG.width;
@@ -57,3 +56,4 @@ void UI::parallaxBackground(float deltaTime) {
 
 	}
 }
+

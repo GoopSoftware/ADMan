@@ -2,6 +2,9 @@
 
 #include "Entity.h"
 #include <iostream>
+#include <vector>
+#include "enemy.h"
+
 
 
 
@@ -9,27 +12,28 @@ class Player : Entity
 {
 
 public:
-	Player(Texture2D runningTexture, Texture2D attackTexture);
+	Player(Texture2D runningTexture, Texture2D attackTexture, std::vector<Enemy*> enemies);
 	~Player();
 
 
-	void update(float deltaTime) override;
+	void update(float deltaTime, float gameSpeed) override;
 	void draw() override;
-	void changeDest(Rectangle newDest) { dest = newDest; }
-
-	
+	Rectangle getDest() { return dest; }
+	Rectangle getHurtBox() { return hurtBox; }
+	Rectangle getHitBox() { return hitBox; }
+	std::vector<Enemy*> enemies;
 
 
 private:
 
-	int frameWidth{80};
-	int frameHeight{64};
+	float timer = 0.0f;
+	float gameSpeed{};
+	int frameWidth{ 80 };
+	int frameHeight{ 64 };
 	int frameCount = 8;
 	int currentFrame = 0;
 	float frameTime = 0.06f;
-	Vector2 baseCenter = { 400, 545 };
 
-	float timer = 0.0f;
 
 	Texture2D runningTexture;
 	Texture2D attackTexture;
@@ -46,13 +50,18 @@ private:
 	Rectangle hurtBox = { static_cast<float>(dest.x * xMult),
 						  static_cast<float>(dest.y * yMult),
 						  static_cast<float>(dest.width - 172),
-						  static_cast<float>(dest.height - 88)  };
+						  static_cast<float>(dest.height - 88) 
+						};
+
+	Rectangle hitBox = {};
 
 	enum class PlayerState {
 		RUNNING,
 		ATTACKING,
 		DODGE
 	};
+
 	PlayerState state = PlayerState::RUNNING;
+
 };
 

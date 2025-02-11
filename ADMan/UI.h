@@ -16,13 +16,13 @@ public:
 	const int screenHeight;
 
 
-	void parallaxBackground(float deltaTime);
+	void parallaxBackground(float deltaTime, float gameSpeed);
 
 
 	float bgScrollSpeed = .05f;
 	float mgScrollSpeed = 1.5f;
 	float fgScrollSpeed = 10.f;
-	float wwScrollSpeed = 125.f;
+	float wwScrollSpeed = 200.f;
 
 
 

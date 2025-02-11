@@ -8,7 +8,7 @@ public:
 	virtual ~Entity() {};
 
 
-	virtual void update(float deltaTime) {};
+	virtual void update(float deltaTime, float gameSpeed) {};
 	virtual void draw() {};
 
 
