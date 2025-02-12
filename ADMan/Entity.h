@@ -9,7 +9,7 @@ public:
 
 
 	virtual void update(float deltaTime, float gameSpeed) {};
-	virtual void draw() {};
+	virtual void draw(float deltaTime, float gameSpeed) {};
 
 
 

@@ -43,13 +43,14 @@ Assets Ideas:
 
 /* 
 TODO:
-	1. Change attack animations
-	2. Add collision detection in collision class
-	3. Create combat decision logic inside engagementmanager
-	5. Code enemy class
-	 - Add enemy assets
-	6. Add boss class
-	7. Add enemy spawning and deconstructing system
+	- Add attack pattern for enemy1
+
+	- Add scripted attack for floating eye
+	- Add collision detection in collision class
+	- Add boss class with boss enemy
+
+BUGS:
+	1. enemy hurtbox not following gameSpeed ( Maybe we keep this in order to give player more time to hit successfully
 
 */
 
@@ -93,15 +94,21 @@ int main() {
 		enemySpawner.update(deltaTime);
 		if (enemySpawner.spawnEnemy) {
 			enemySpawner.spawnEnemy = false;
+			// Decide enemy atttack pattern
+
 			Enemy* newEnemy = new Enemy(assets.flyingEye);
-			newEnemy->setPosition({ screenWidth - 150, 345, static_cast<float>(150 * 3), static_cast<float>(150 * 3) });
+			// ^ include enemy attack pattern when creating the enemy pointer
+
+			newEnemy->setPosition({ screenWidth + 150, 345, static_cast<float>(150 * 3), static_cast<float>(150 * 3) });
 			enemies.push_back(newEnemy);
+			
+
 		}
 
 		// Handles update logic of all entities
 		player.update(deltaTime, gameSpeed);
 		for (auto enemy : enemies) {
-			enemy->update(deltaTime, gameSpeed);
+			enemy->update(deltaTime, gameSpeed, player);
 		}
 
 		// Handles all collisions between player and enemies vector
@@ -127,9 +134,9 @@ int main() {
 
 		// All entity animations
 		for (auto& enemy : enemies) {
-			enemy->draw();
+			enemy->draw(deltaTime, gameSpeed);
 		}
-		player.draw();
+		player.draw(deltaTime, gameSpeed);
 
 
 		EndDrawing();

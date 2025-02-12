@@ -16,9 +16,4 @@ void EnemySpawner::update(float deltaTime) {
 		spawnTimer = 0.0f;
 		spawnEnemy = true;
 	}
-
-	if (spawnEnemy) {
-
-	}
-
 }

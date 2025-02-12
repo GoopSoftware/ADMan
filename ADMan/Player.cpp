@@ -31,7 +31,7 @@ void Player::update(float deltaTime, float gameSpeed) {
 	if (IsKeyPressed(KEY_D)) {
 		// Dodge/Parry Logic
 		std::cout << "Player Dodge/Parry" << std::endl;
-		state = PlayerState::RUNNING;
+		state = PlayerState::DODGE;
 		currentFrame = 0;
 		timer = 0.0f;
 	}
@@ -64,6 +64,9 @@ void Player::update(float deltaTime, float gameSpeed) {
 			}
 			
 			break;
+
+		case PlayerState::DODGE:
+			break;
 	}
 
 
@@ -80,10 +83,10 @@ void Player::update(float deltaTime, float gameSpeed) {
 }
 
 
-void Player::draw() {
+void Player::draw(float deltaTime, float gameSpeed) {
 
 	DrawTexturePro(texture, source, dest, origin, 0.0f, WHITE);
-	DrawRectangleLines(hurtBox.x, hurtBox.y, hurtBox.width, hurtBox.height, GREEN);
-	DrawRectangleLines(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+	//DrawRectangleLines(hurtBox.x, hurtBox.y, hurtBox.width, hurtBox.height, GREEN);
+	//DrawRectangleLines(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
 
 }

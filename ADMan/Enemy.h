@@ -1,22 +1,31 @@
 #pragma once
 
 #include "Entity.h"
+#include "iostream"
+#include "raylib.h"
+#include "raymath.h"
 
-class Enemy : Entity
+class Player;
+
+class Enemy
 {
 
 public:
 	Enemy(Texture2D runningTexture);
 	~Enemy();
 
-	void update(float deltaTime, float gameSpeed) override;
-	void draw() override;
+	
+	void update(float deltaTime, float gameSpeed, Player &player);
+	void draw(float deltaTime, float gameSpeed);
 	Rectangle getHurtBox() { return hurtBox; }
 	void setPosition(Rectangle newDest) { dest = newDest; }
 	Rectangle getDest() { return dest; }
 
 	bool attacked = false;
-
+	void updateAttack(float gameSpeed);
+	void updateAirAttack(float deltaTime, float gameSpeed);
+	void shootProjectile();
+	void updateProjectile(float deltaTime, float gameSpeed, Player &player);
 
 private:
 
@@ -29,6 +38,13 @@ private:
 	int currentFrame = 0;
 	float frameTime = 0.06f;
 	//Vector2 baseCenter = { 400, 545 };
+
+	Vector2 airAttackVelocity;
+	bool airAttack = false;
+	bool fireProjectile = false;
+	bool projectileActive = false;
+	Vector2 projectilePos;
+	Vector2 projectileVelocity;
 
 
 	Texture2D runningTexture;
@@ -44,5 +60,11 @@ private:
 
 	Rectangle hurtBox = {};
 
+	enum class EnemyState {
+		ATTACK,
+		AIRATTACK
+	};
+
+	EnemyState state = EnemyState::AIRATTACK;
 };
 

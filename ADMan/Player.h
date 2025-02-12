@@ -15,13 +15,16 @@ public:
 	Player(Texture2D runningTexture, Texture2D attackTexture, std::vector<Enemy*> enemies);
 	~Player();
 
+	
 
 	void update(float deltaTime, float gameSpeed) override;
-	void draw() override;
+	void draw(float deltaTime, float gameSpeed) override;
 	Rectangle getDest() { return dest; }
 	Rectangle getHurtBox() { return hurtBox; }
 	Rectangle getHitBox() { return hitBox; }
+	//PlayerState getState() { return state; }
 	std::vector<Enemy*> enemies;
+
 
 
 private:
