@@ -44,7 +44,6 @@ void Enemy::update(float deltaTime, float gameSpeed, Player &player) {
 }
 
 void Enemy::updateAttack(float gameSpeed) {
-	std::cout << "UpdateAttack" << std::endl;
 	hurtBox = {
 				static_cast<float>(dest.x + 20),
 				static_cast<float>(dest.y + 34),
@@ -67,8 +66,8 @@ void Enemy::updateAirAttack(float deltaTime, float gameSpeed) {
 				static_cast<float>(dest.width - 370),
 				static_cast<float>(dest.height - 370)
 	};
-	if (dest.x > 600.f && dest.y > 200.f) {
-		airAttackVelocity = { -1000.f * gameSpeed, -200.f * gameSpeed };
+	if (dest.x > 600.f && dest.y > 100.f) {
+		airAttackVelocity = { -400.f * gameSpeed, -150.f * gameSpeed };
 		dest.x += airAttackVelocity.x * deltaTime;
 		dest.y += airAttackVelocity.y * deltaTime;
 	}
@@ -79,23 +78,23 @@ void Enemy::updateAirAttack(float deltaTime, float gameSpeed) {
 			airAttackVelocity = { 0, 0 };
 			if (!fireProjectile) {
 				fireProjectile = true;
-				shootProjectile();
+				shootProjectile(gameSpeed);
 			}
 		}
 	}
 }
 
-void Enemy::shootProjectile(){
+void Enemy::shootProjectile(float gameSpeed){
 	//std::cout << "Shooting Projectile" << std::endl;
 	
-	projectilePos = { dest.x, dest.y };
+	projectilePos = { dest.x + 45, dest.y + 45 };
 	Vector2 targetPos = { 300, 445 };
 
 	
 	Vector2 direction = Vector2Subtract(targetPos, projectilePos);
 	direction = Vector2Normalize(direction);
 	
-	float projectileSpeed = 500.f;
+	float projectileSpeed = 350.f * gameSpeed;
 	projectileVelocity = Vector2Scale(direction, projectileSpeed);
 
 	projectileActive = true;
@@ -108,7 +107,7 @@ void Enemy::updateProjectile(float deltaTime, float gameSpeed, Player &player) {
 		projectilePos = Vector2Add(projectilePos, Vector2Scale(projectileVelocity, deltaTime));
 		
 		
-		if (CheckCollisionCircleRec(projectilePos, 50, player.getHurtBox())) {
+		if (CheckCollisionCircleRec(projectilePos, 50, player.getHurtBox()) && player.state == PlayerState::DODGE) {
 			projectileVelocity = Vector2Scale(projectileVelocity, -1.0f);
 			std::cout << "Projectile deflected" << std::endl;
 		}
@@ -129,4 +128,8 @@ void Enemy::draw(float deltaTime, float gameSpeed) {
 	if (projectileActive) {
 		DrawCircle(projectilePos.x, projectilePos.y, 25, RED);
 	}
+}
+
+void Enemy::setAttackState(EnemyState newState) {
+	state = newState;
 }

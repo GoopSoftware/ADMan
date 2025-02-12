@@ -7,6 +7,12 @@
 
 class Player;
 
+
+enum class EnemyState {
+	ATTACK,
+	AIRATTACK
+};
+
 class Enemy
 {
 
@@ -24,8 +30,9 @@ public:
 	bool attacked = false;
 	void updateAttack(float gameSpeed);
 	void updateAirAttack(float deltaTime, float gameSpeed);
-	void shootProjectile();
+	void shootProjectile(float gameSpeed);
 	void updateProjectile(float deltaTime, float gameSpeed, Player &player);
+	void setAttackState(EnemyState newState);
 
 private:
 
@@ -60,10 +67,7 @@ private:
 
 	Rectangle hurtBox = {};
 
-	enum class EnemyState {
-		ATTACK,
-		AIRATTACK
-	};
+
 
 	EnemyState state = EnemyState::AIRATTACK;
 };

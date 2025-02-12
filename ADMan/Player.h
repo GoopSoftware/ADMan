@@ -6,7 +6,11 @@
 #include "enemy.h"
 
 
-
+enum class PlayerState {
+	RUNNING,
+	ATTACKING,
+	DODGE
+};
 
 class Player : Entity
 {
@@ -25,6 +29,7 @@ public:
 	//PlayerState getState() { return state; }
 	std::vector<Enemy*> enemies;
 
+	PlayerState state = PlayerState::RUNNING;
 
 
 private:
@@ -58,13 +63,8 @@ private:
 
 	Rectangle hitBox = {};
 
-	enum class PlayerState {
-		RUNNING,
-		ATTACKING,
-		DODGE
-	};
+	
 
-	PlayerState state = PlayerState::RUNNING;
 
 };
 

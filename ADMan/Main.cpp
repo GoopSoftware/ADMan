@@ -73,6 +73,7 @@ int main() {
 	EnemySpawner enemySpawner;
 
 	Player player(assets.playerRun, assets.playerAttack, enemies);
+	srand(time(0));
 
 
 	while (!WindowShouldClose()) {
@@ -84,6 +85,7 @@ int main() {
 		if (IsKeyDown(KEY_LEFT)) {
 			gameSpeed -= .1f;
 			std::cout << "GS: " << gameSpeed << std::endl;
+
 		}
 		if (IsKeyDown(KEY_RIGHT)) {
 			gameSpeed += .1f;
@@ -96,14 +98,19 @@ int main() {
 			enemySpawner.spawnEnemy = false;
 			// Decide enemy atttack pattern
 
+
 			Enemy* newEnemy = new Enemy(assets.flyingEye);
 			// ^ include enemy attack pattern when creating the enemy pointer
+			int result = rand() % 2;
+
+			if (result == 0) { newEnemy->setAttackState(EnemyState::ATTACK); }
+			else { newEnemy->setAttackState(EnemyState::AIRATTACK); }
 
 			newEnemy->setPosition({ screenWidth + 150, 345, static_cast<float>(150 * 3), static_cast<float>(150 * 3) });
 			enemies.push_back(newEnemy);
-			
-
 		}
+		// ------------------------End enemy spawner------------------------------
+
 
 		// Handles update logic of all entities
 		player.update(deltaTime, gameSpeed);
