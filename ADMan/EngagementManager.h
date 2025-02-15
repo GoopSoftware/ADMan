@@ -17,7 +17,7 @@ public:
 	Player& player;
 
 	bool isCollision = false;
-	void collisionManager();
+	void collisionManager(std::vector<Enemy*>& enemies);
 
 private:
 

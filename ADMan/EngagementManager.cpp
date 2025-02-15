@@ -11,7 +11,7 @@ EngagementManager::~EngagementManager() {
 
 }
 
-void EngagementManager::collisionManager() {
+void EngagementManager::collisionManager(std::vector<Enemy*>& enemies) {
 
 	for (auto& enemy : enemies) {
 		if (CheckCollisionRecs(enemy->getHurtBox(), player.getHurtBox())) {
@@ -25,5 +25,15 @@ void EngagementManager::collisionManager() {
 		}
 			
 	}
-
+	// Interates through enemies vector to check if enemy has been attacked or projectile lands and then delete enemy
+	for (auto it = enemies.begin(); it != enemies.end();) {
+		if ((*it)->attacked || (*it)->projectileHitEnemy) {
+			delete* it;
+			it = enemies.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 }
+

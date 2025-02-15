@@ -110,22 +110,25 @@ void Enemy::shootProjectile(float gameSpeed){
 	projectileVelocity = Vector2Scale(direction, projectileSpeed);
 
 	projectileActive = true;
-
-
-
-
 }
 
 void Enemy::updateProjectile(float deltaTime, float gameSpeed, Player &player) {
 	if (projectileActive) {
 		projectilePos = Vector2Add(projectilePos, Vector2Scale(projectileVelocity, deltaTime));
-		
-		
+
 		if (CheckCollisionCircleRec(projectilePos, 50, player.getHurtBox()) && player.state == PlayerState::DODGE) {
+			// When deflection is true apply this following function to projectile
+			// projectileDeflected() {
+			//	
+			//	Vector2 direction = Vector2Subtract(enemyPos, projectilePos);
+			//  direction = Vector2Normalize(direction)
+			//	projectileVelocity = Vector2Scale(direction, projectileSpeed);
+			//	
+			//}
 			projectileVelocity = Vector2Scale(projectileVelocity, -1.0f);
 			std::cout << "Projectile deflected" << std::endl;
 			projectileDeflected = true;
-	
+
 		}
 		if (CheckCollisionCircleRec(projectilePos, 25, hurtBox) && projectileDeflected) {
 			std::cout << "Enemy Collision with projectile";

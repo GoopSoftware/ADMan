@@ -43,12 +43,14 @@ Assets Ideas:
 
 /* 
 TODO:
-	- add death for air attack parry, if no collision detected fly away
 	- Add boss class with boss enemy
+	- Add flying eye fly away if projectile isnt deflected
 
 BUGS:
 	1. enemy hurtbox not following gameSpeed ( Maybe we keep this in order to give player more time to hit successfully
-	2. Projectile isnt being applied to gameSpeed
+	2. If projectile doesnt have a clean deflection it gets stuck on the player (I'm assuming its the deflection logic angle)
+	
+
 */
 
 
@@ -89,24 +91,8 @@ int main() {
 			std::cout << "GS: " << gameSpeed << std::endl;
 		}
 
-		// Spawns a new enemy - The cleanliness of this isnt very good, We should move all logic into the update function
-		enemySpawner.update(deltaTime);
-		if (enemySpawner.spawnEnemy) {
-			enemySpawner.spawnEnemy = false;
-			// Decide enemy atttack pattern
-
-
-			Enemy* newEnemy = new Enemy(assets.flyingEye, assets.flyingEyeAttack);
-			// ^ include enemy attack pattern when creating the enemy pointer
-			int result = rand() % 2;
-
-			if (result == 0) { newEnemy->setAttackState(EnemyState::ATTACK); }
-			else { newEnemy->setAttackState(EnemyState::AIRATTACK); }
-
-			newEnemy->setPosition({ screenWidth + 150, 345, static_cast<float>(150 * 3), static_cast<float>(150 * 3) });
-			enemies.push_back(newEnemy);
-		}
-		// ------------------------End enemy spawner------------------------------
+		// Handles logic to spawn enemy and push_back enemies vector
+		enemySpawner.update(deltaTime, enemies, assets, screenWidth);
 
 
 		// Handles update logic of all entities
@@ -116,30 +102,9 @@ int main() {
 		}
 
 		// Handles all collisions between player and enemies vector
-		EM.collisionManager();
-		
-		// Interates through enemies vector to check if enemy has been attacked and then delete enemy
-		for (auto it = enemies.begin(); it != enemies.end(); ) {
-			if ((*it)->attacked) {
-				delete* it;
-				it = enemies.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
-		// Interates through enemies vector to check if enemy has been hit by deflected projectile then delete enemy
-		for (auto it = enemies.begin(); it != enemies.end(); ) {
-			if ((*it)->projectileHitEnemy) {
-				delete* it;
-				it = enemies.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
+		EM.collisionManager(enemies);
 
-	
+
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
