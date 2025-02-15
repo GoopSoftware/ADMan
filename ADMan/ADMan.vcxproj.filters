@@ -88,5 +88,8 @@
     <Image Include="..\..\..\..\Downloads\Monsters_Creatures_Fantasy\Monsters_Creatures_Fantasy\Flying eye\Flying Eye.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\Flying Eye Attack.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
 </Project>

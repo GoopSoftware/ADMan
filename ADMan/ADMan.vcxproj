@@ -148,6 +148,7 @@
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\Monsters_Creatures_Fantasy\Monsters_Creatures_Fantasy\Flying eye\Flying Eye.png" />
     <Image Include="Assets\background.png" />
+    <Image Include="Assets\Flying Eye Attack.png" />
     <Image Include="Assets\graveyard.png" />
     <Image Include="Assets\mountains.png" />
     <Image Include="Assets\player katana run 80x64.png" />

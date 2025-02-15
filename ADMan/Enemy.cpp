@@ -2,8 +2,8 @@
 #include "Player.h"
 
 
-Enemy::Enemy(Texture2D runningTexture) :
-runningTexture(runningTexture)
+Enemy::Enemy(Texture2D runningTexture, Texture2D attackTexture) :
+runningTexture(runningTexture), attackTexture(attackTexture)
 {
 
 }
@@ -30,12 +30,23 @@ void Enemy::update(float deltaTime, float gameSpeed, Player &player) {
 	switch (state) {
 
 		case EnemyState::ATTACK:
+			if (dest.x > 547) {
+				texture = runningTexture;
+			}
+			else if (dest.x < 547 && currentFrame == 0) {
+				texture = attackTexture;
+				if (dest.x < 275) {
+					texture = runningTexture;
+				}
+			}
 			updateAttack(gameSpeed);
+			
 			break;
 		
 
 		case EnemyState::AIRATTACK:
 			updateAirAttack(deltaTime, gameSpeed);
+			texture = runningTexture;
 			break;
 
 
@@ -55,7 +66,6 @@ void Enemy::updateAttack(float gameSpeed) {
 	if (dest.x < 0 - 50) {
 		dest.x = 1280;
 	}
-	
 }
 
 void Enemy::updateAirAttack(float deltaTime, float gameSpeed) {
@@ -79,6 +89,7 @@ void Enemy::updateAirAttack(float deltaTime, float gameSpeed) {
 			if (!fireProjectile) {
 				fireProjectile = true;
 				shootProjectile(gameSpeed);
+			
 			}
 		}
 	}
@@ -92,12 +103,15 @@ void Enemy::shootProjectile(float gameSpeed){
 
 	
 	Vector2 direction = Vector2Subtract(targetPos, projectilePos);
+
 	direction = Vector2Normalize(direction);
 	
 	float projectileSpeed = 350.f * gameSpeed;
 	projectileVelocity = Vector2Scale(direction, projectileSpeed);
 
 	projectileActive = true;
+
+
 
 
 }
@@ -110,8 +124,13 @@ void Enemy::updateProjectile(float deltaTime, float gameSpeed, Player &player) {
 		if (CheckCollisionCircleRec(projectilePos, 50, player.getHurtBox()) && player.state == PlayerState::DODGE) {
 			projectileVelocity = Vector2Scale(projectileVelocity, -1.0f);
 			std::cout << "Projectile deflected" << std::endl;
+			projectileDeflected = true;
+	
 		}
-		
+		if (CheckCollisionCircleRec(projectilePos, 25, hurtBox) && projectileDeflected) {
+			std::cout << "Enemy Collision with projectile";
+			projectileHitEnemy = true;
+		}
 	}
 
 	if (projectilePos.x < 0 || projectilePos.x > 1280 ||

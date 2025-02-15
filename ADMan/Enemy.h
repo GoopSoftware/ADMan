@@ -17,7 +17,7 @@ class Enemy
 {
 
 public:
-	Enemy(Texture2D runningTexture);
+	Enemy(Texture2D runningTexture, Texture2D attackTexture);
 	~Enemy();
 
 	
@@ -28,6 +28,8 @@ public:
 	Rectangle getDest() { return dest; }
 
 	bool attacked = false;
+	bool projectileDeflected = false;
+	bool projectileHitEnemy = false;
 	void updateAttack(float gameSpeed);
 	void updateAirAttack(float deltaTime, float gameSpeed);
 	void shootProjectile(float gameSpeed);
@@ -55,6 +57,7 @@ private:
 
 
 	Texture2D runningTexture;
+	Texture2D attackTexture;
 	Texture2D texture = runningTexture;
 
 

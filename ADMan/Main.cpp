@@ -43,15 +43,12 @@ Assets Ideas:
 
 /* 
 TODO:
-	- Add attack pattern for enemy1
-
-	- Add scripted attack for floating eye
-	- Add collision detection in collision class
+	- add death for air attack parry, if no collision detected fly away
 	- Add boss class with boss enemy
 
 BUGS:
 	1. enemy hurtbox not following gameSpeed ( Maybe we keep this in order to give player more time to hit successfully
-
+	2. Projectile isnt being applied to gameSpeed
 */
 
 
@@ -99,7 +96,7 @@ int main() {
 			// Decide enemy atttack pattern
 
 
-			Enemy* newEnemy = new Enemy(assets.flyingEye);
+			Enemy* newEnemy = new Enemy(assets.flyingEye, assets.flyingEyeAttack);
 			// ^ include enemy attack pattern when creating the enemy pointer
 			int result = rand() % 2;
 
@@ -120,9 +117,20 @@ int main() {
 
 		// Handles all collisions between player and enemies vector
 		EM.collisionManager();
-	
+		
+		// Interates through enemies vector to check if enemy has been attacked and then delete enemy
 		for (auto it = enemies.begin(); it != enemies.end(); ) {
 			if ((*it)->attacked) {
+				delete* it;
+				it = enemies.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+		// Interates through enemies vector to check if enemy has been hit by deflected projectile then delete enemy
+		for (auto it = enemies.begin(); it != enemies.end(); ) {
+			if ((*it)->projectileHitEnemy) {
 				delete* it;
 				it = enemies.erase(it);
 			}

@@ -16,6 +16,7 @@ public:
 	Texture2D playerAttack = LoadTexture("Assets/player katana running attack.png");
 
 	Texture2D flyingEye = LoadTexture("Assets/Flying Eye.png");
+	Texture2D flyingEyeAttack = LoadTexture("Assets/Flying Eye Attack.png");
 
 	Texture2D BG = LoadTexture("Assets/background.png");
 	Texture2D MG = LoadTexture("Assets/mountains.png");
