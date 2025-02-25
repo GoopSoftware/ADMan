@@ -1,6 +1,8 @@
 #include <iostream>
+#include <iomanip>
 #include <cmath>
 #include <cstdlib>
+#include <random>
 
 #include "raylib.h"
 #include "Player.h"
@@ -34,7 +36,7 @@ Theme: Pursuit
 Ideas:
 	- Make it a rhythm game
 
-
+	65
 Assets Ideas:
 	- https://luizmelo.itch.io/monsters-creatures-fantasy
 
@@ -42,13 +44,19 @@ Assets Ideas:
 */
 
 /* 
-TODO:
+Future Features:
 	- Add boss class with boss enemy
-	- Add flying eye fly away if projectile isnt deflected
+
+TODO:
+	- Projectile Asset
+	- Dodge/Deflect Asset
+
+	- Randomize enemy flying stopping point
+	- Seed rng only once and feed it into where its needed (Maybe instead add 4 positions and roll dice between 4)
 
 BUGS:
 	1. enemy hurtbox not following gameSpeed ( Maybe we keep this in order to give player more time to hit successfully
-	2. If projectile doesnt have a clean deflection it gets stuck on the player (I'm assuming its the deflection logic angle)
+	
 	
 
 */
@@ -78,7 +86,6 @@ int main() {
 	while (!WindowShouldClose()) {
 
 		EngagementManager EM(player, enemies);
-
 		float deltaTime = GetFrameTime();
 
 		if (IsKeyDown(KEY_LEFT)) {
@@ -92,7 +99,7 @@ int main() {
 		}
 
 		// Handles logic to spawn enemy and push_back enemies vector
-		enemySpawner.update(deltaTime, enemies, assets, screenWidth);
+		enemySpawner.update(deltaTime, gameSpeed, enemies, assets, screenWidth);
 
 
 		// Handles update logic of all entities

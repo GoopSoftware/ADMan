@@ -25,9 +25,9 @@ void EngagementManager::collisionManager(std::vector<Enemy*>& enemies) {
 		}
 			
 	}
-	// Interates through enemies vector to check if enemy has been attacked or projectile lands and then delete enemy
+	// Iterates through enemies vector to check if enemy has been attacked or projectile lands and then delete enemy
 	for (auto it = enemies.begin(); it != enemies.end();) {
-		if ((*it)->attacked || (*it)->projectileHitEnemy) {
+		if ((*it)->attacked || (*it)->projectileHitEnemy || (*it)->leftScreen) {
 			delete* it;
 			it = enemies.erase(it);
 		}

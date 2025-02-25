@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <vector>
 
+#include <random>
+
 
 
 EnemySpawner::EnemySpawner() {
@@ -14,8 +16,10 @@ EnemySpawner::~EnemySpawner() {
 }
 
 
-void EnemySpawner::update(float deltaTime, std::vector<Enemy*>& enemies, const AssetManager& assets, const int screenWidth) {
-	spawnTimer += deltaTime;
+
+
+void EnemySpawner::update(float deltaTime, float gameSpeed, std::vector<Enemy*>& enemies, const AssetManager& assets, const int screenWidth) {
+	spawnTimer += deltaTime * gameSpeed;
 	if (spawnTimer >= spawnInterval) {
 		spawnTimer = 0.0f;
 		spawnEnemy = true;

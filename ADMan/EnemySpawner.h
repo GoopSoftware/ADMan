@@ -11,10 +11,13 @@ public:
 	~EnemySpawner();
 
 
+	void update(float deltaTime, float gameSpeed, std::vector<Enemy*>& enemies, const AssetManager& assets, const int screenWidth);
+
+
 	float spawnTimer = 0.0f;
-	float spawnInterval = 2.0f;
-	void update(float deltaTime, std::vector<Enemy*>& enemies, const AssetManager& assets, const int screenWidth);
+	float spawnInterval{1.75f};
 	bool spawnEnemy = false;
+	
 
 private:
 
